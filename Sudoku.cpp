@@ -23,10 +23,11 @@ namespace hussain{
     for(int i = 0; i < 9; i++){
       for(int j = 0; j < 9; j++){
         is >> cells[i][j];
+        validity(cells[i][j], i, j);
         if(cells[i][j] != 0){
           permanent[i][j] = true;
           for(int k = 0; k < 9; k++){
-            possibilities[i][j][k] =0;
+            possibilities[i][j][k] = 0;
           }
         }
       }
@@ -45,16 +46,28 @@ namespace hussain{
     return os;
   }
 
-  bool Sudoku::checkHorizontal() {
-
+  bool Sudoku::checkHorizontal(int number, int vPosition) {
+    bool valid = true;
+    for(int hPos = 0; hPos < 9; hPos++){
+      if(cells[vPosition][hPos] == number){
+        valid = false;
+      }
+    }
+    return valid;
   }
 
-  bool Sudoku::checkVertical(){
-    
+  bool Sudoku::checkVertical(int number, int hPosition){
+    bool valid = true;
+    for(int vPos = 0; vPos < 9; vPos++){
+      if(cells[vPos][hPosition] == number){
+        valid = false;
+      }
+    }
+    return valid;
   }
 
   bool Sudoku::checkInBox() {
-
+    
   }
 
   bool Sudoku::onlyPossibility() {
@@ -62,6 +75,7 @@ namespace hussain{
   }
 
   bool Sudoku::validity(int number, int hPosition, int vPosition) {
+
 
   }
 

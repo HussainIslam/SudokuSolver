@@ -12,11 +12,11 @@ namespace hussain{
     ~Sudoku();
     std::istream& input(std::istream& is);
     std::ostream& display(std::ostream& os) const ;
-    bool checkHorizontal();
-    bool checkVertical();
+    bool checkHorizontal(int number, int vPosition);
+    bool checkVertical(int number, int hPosition);
     bool checkInBox();
     bool onlyPossibility();
-    bool validity();
+    bool validity(int number, int hPosition, int vPosition);
 
   };
 
