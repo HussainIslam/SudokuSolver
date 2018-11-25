@@ -11,19 +11,23 @@ namespace hussain{
         permanent[i][j] = false;
         for(int k = 0; k < 9; k++){
           possibilities[i][j][k] = k+1;
+
         }
       }
     }
-
   }
   
   Sudoku::~Sudoku() {}
 
   std::istream& Sudoku::input(std::istream& is){
+    bool valid;
     for(int i = 0; i < 9; i++){
       for(int j = 0; j < 9; j++){
-        is >> cells[i][j];
-        validity(cells[i][j], i, j);
+        do{
+          cout << "Please enter number for " << i+1 <<"th row and " << j+1 << "th column: ";
+          is >> cells[i][j];
+          cout << !validity(cells[i][j], i, j); 
+        }while(validity(cells[i][j], i, j));
         if(cells[i][j] != 0){
           permanent[i][j] = true;
           for(int k = 0; k < 9; k++){
@@ -38,7 +42,7 @@ namespace hussain{
   std::ostream& Sudoku::display(std::ostream& os) const {
     for(int i = 0; i < 9; i++) {
       for(int j = 0; j < 9; j++){
-        os << setw(3);
+        os << setw(4);
         os << cells[i][j];
       }
       os << endl;
@@ -66,8 +70,26 @@ namespace hussain{
     return valid;
   }
 
-  bool Sudoku::checkInBox() {
-    
+  bool Sudoku::checkInBox(int number, int hPosition, int vPosition) {
+    int minHPos;
+    int maxHPos;
+    int minVPos;
+    int maxVPos;
+    bool valid = true;
+
+    minHPos = hPosition - (hPosition % 3);
+    minVPos = vPosition - (vPosition % 3);
+    maxHPos = minHPos + 3;
+    maxVPos = minVPos + 3;
+
+    for(int i = minHPos; i < maxHPos; i++){
+      for(int j = minVPos; j < maxVPos; j++){
+        if(cells[i][j] == number){
+          valid = false;
+        }
+      }
+    }
+    return valid;
   }
 
   bool Sudoku::onlyPossibility() {
@@ -75,8 +97,10 @@ namespace hussain{
   }
 
   bool Sudoku::validity(int number, int hPosition, int vPosition) {
-
-
+    bool horizontal = checkHorizontal(number, vPosition);
+    bool vertical = checkVertical(number, hPosition);
+    bool box = checkInBox(number, hPosition, vPosition);
+    return horizontal * vertical * box;
   }
 
   std::istream& operator>>(std::istream& is, Sudoku& sudoku) {

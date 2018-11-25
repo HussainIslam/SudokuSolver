@@ -14,7 +14,7 @@ namespace hussain{
     std::ostream& display(std::ostream& os) const ;
     bool checkHorizontal(int number, int vPosition);
     bool checkVertical(int number, int hPosition);
-    bool checkInBox();
+    bool checkInBox(int number, int hPosition, int vPosition);
     bool onlyPossibility();
     bool validity(int number, int hPosition, int vPosition);
 
